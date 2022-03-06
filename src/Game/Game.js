@@ -4,9 +4,10 @@ import { IsDraw, IsVictory } from "./EndgameConditions";
 
 export const TicTacToe = (numberOfRows, numberOfColumns) => ({
   setup: () => {
-    debugger;
     return {
-      cells: Array(numberOfRows).fill(Array(numberOfColumns).fill(null))
+      cells: Array(parseInt(numberOfRows, 10)).fill(
+        Array(parseInt(numberOfColumns, 10)).fill(null)
+      )
     };
   },
   moves: {
@@ -29,6 +30,19 @@ export const TicTacToe = (numberOfRows, numberOfColumns) => ({
     }
     if (IsDraw(G.cells)) {
       return { draw: true };
+    }
+  },
+  ai: {
+    enumerate: (G, ctx) => {
+      let moves = [];
+      for (let i = 0; i < G.cells.length; i++) {
+        for (let j = 0; j < G.cells[0].length; j++) {
+          if (G.cells[i][j] === null) {
+            moves.push({ move: "clickCell", args: [i, j] });
+          }
+        }
+      }
+      return moves;
     }
   }
 });

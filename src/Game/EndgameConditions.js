@@ -9,29 +9,41 @@ export const IsDraw = (cells) => {
   return true;
 };
 
-export const IsVictory = (cells) => {
-  console.log("checking for winner");
-  for (let i = 0; i < cells.length; i++) {
-    if (
-      (cells[i][0] !== null &&
-        cells[i][0] === cells[i][1] &&
-        cells[i][1] === cells[i][2]) ||
-      (cells[0][i] !== null &&
-        cells[0][i] === cells[1][i] &&
-        cells[1][i] === cells[2][i])
-    ) {
-      return true;
-    }
-  }
+const checkRow = (cells, row, column) =>
+  cells[row + 1] &&
+  cells[row][column] === cells[row + 1][column] &&
+  cells[row + 2] &&
+  cells[row][column] === cells[row + 2][column];
 
-  if (
-    (cells[0][0] !== null &&
-      cells[0][0] === cells[1][1] &&
-      cells[1][1] === cells[2][2]) ||
-    (cells[0][2] !== null &&
-      cells[0][2] === cells[1][1] &&
-      cells[1][1] === cells[2][0])
-  ) {
-    return true;
+const checkColoumn = (cells, row, column) =>
+  cells[row][column] === cells[row][column + 1] &&
+  cells[row][column] === cells[row][column + 2];
+
+const checkDiagnal = (cells, row, column) =>
+  (cells[row + 1] &&
+    cells[row][column] === cells[row + 1][column + 1] &&
+    cells[row + 2] &&
+    cells[row][column] === cells[row + 2][column + 2]) ||
+  (cells[row - 1] &&
+    cells[row][column] === cells[row - 1][column + 1] &&
+    cells[row - 2] &&
+    cells[row][column] === cells[row - 2][column + 2]);
+
+const checkCell = (cells, row, column) => {
+  if (cells[row][column] !== null) {
+    if (
+      checkRow(cells, row, column) ||
+      checkColoumn(cells, row, column) ||
+      checkDiagnal(cells, row, column)
+    )
+      return true;
+  }
+};
+
+export const IsVictory = (cells) => {
+  for (let i = 0; i < cells.length; i++) {
+    for (let j = 0; j < cells[0].length; j++) {
+      if (checkCell(cells, i, j)) return true;
+    }
   }
 };

@@ -21,7 +21,7 @@ const App = () => {
         <div>
           <h1>Welcome to custom Tic Tac Toe</h1>
           <p>Please select your game options</p>
-          <label for="column-input">Number of columns</label>
+          <label htmlFor="column-input">Number of columns</label>
           <input
             type="number"
             id="column-input"
@@ -30,7 +30,7 @@ const App = () => {
             onChange={coloumnsChangeHandler}
           />
           <br /> <br />
-          <label for="rows-input">Number of rows</label>
+          <label htmlFor="rows-input">Number of rows</label>
           <input
             type="number"
             id="rows-input"
